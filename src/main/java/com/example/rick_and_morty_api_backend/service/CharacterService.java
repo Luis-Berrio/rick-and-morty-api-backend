@@ -36,16 +36,13 @@ public class CharacterService {
       if (response.getBody() != null && response.getBody().getResults() != null) {
         List<Character> characters = response.getBody().getResults();
 
-        // Calcular cuántos personajes necesitamos de esta página
         int remainingItems = totalItemsToFetch - fetchedItems;
         int itemsToTake = Math.min(remainingItems, characters.size());
 
-        // Tomar solo los personajes necesarios
         List<Character> charactersToSave = characters.subList(0, itemsToTake);
         allCharacters.addAll(charactersToSave);
         fetchedItems += itemsToTake;
 
-        // Verificar si hay más páginas y si necesitamos más personajes
         if (response.getBody().getInfo().getNext() == null || fetchedItems >= totalItemsToFetch) {
           hasMoreItems = false;
         } else {
@@ -56,7 +53,6 @@ public class CharacterService {
       }
     }
 
-    // Guardar todos los personajes recolectados
     if (!allCharacters.isEmpty()) {
       characterRepository.saveAll(allCharacters);
     }
@@ -64,10 +60,5 @@ public class CharacterService {
 
   public List<Character> getAllCharacters() {
     return characterRepository.findAll();
-  }
-
-  public Character getCharacterById(Long id) {
-    return characterRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Character not found"));
   }
 }

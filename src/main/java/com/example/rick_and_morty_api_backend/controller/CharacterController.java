@@ -25,10 +25,5 @@ public class CharacterController {
     @GetMapping
     public ResponseEntity<List<Character>> getAllCharacters() {
         return ResponseEntity.ok(characterService.getAllCharacters());
-    }
-    
-    @GetMapping("/{id}")
-    public ResponseEntity<Character> getCharacterById(@PathVariable Long id) {
-        return ResponseEntity.ok(characterService.getCharacterById(id));
-    }
+    }    
 }
